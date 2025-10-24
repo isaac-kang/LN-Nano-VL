@@ -20,17 +20,6 @@ export STR_DATA_DIR=/data/isaackang/data/STR/english_case-sensitive/lmdb/evaluat
 #   --results_dir DIR         : Results directory (default: str_results)
 #   --cuda_device N           : CUDA device to use (default: 4)
 
-# Example usage for single dataset:
-# python str_evaluation.py \
-#     --lmdb_path "$STR_DATA_DIR/CUTE80" \
-#     --max_samples 10 \
-#     --batch_size 1 \
-#     --device cuda \
-#     --prompt "What is the main text in the image? Output only the text." \
-#     --case-sensitive false \
-#     --ignore-punctuation true \
-#     --ignore-spaces true \
-#     --cuda_device 4
 
     # --datasets "CUTE80" \
 # Example usage for multiple datasets:

@@ -17,9 +17,6 @@ from PIL import Image
 from io import BytesIO
 from transformers import AutoModel, AutoTokenizer, AutoImageProcessor
 
-# Set CUDA device
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-
 
 class NemotronSTREvaluator:
     def __init__(self, model_name: str = "nvidia/Llama-3.1-Nemotron-Nano-VL-8B-V1", 
@@ -363,13 +360,9 @@ def main():
                        help='Results directory for multiple datasets')
     parser.add_argument('--summary_file', type=str, default=None,
                        help='Summary file for multiple datasets')
-    parser.add_argument('--cuda_device', type=str, default='4',
-                       help='CUDA device to use (default: 4)')
     
     args = parser.parse_args()
     
-    # Set CUDA device
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_device
     
     # Set base_path from environment variable if not provided
     if args.base_path is None:
@@ -393,7 +386,6 @@ def main():
     
     if lmdb_paths:
         print("Starting STR Benchmark Evaluation with Llama-3.1-Nemotron-Nano-VL-8B-V1")
-        print(f"Using CUDA device: {args.cuda_device}")
         print(f"Model: {args.model_name}")
         print(f"Prompt: {args.prompt}")
         print(f"Case sensitive: {args.case_sensitive}")
@@ -474,7 +466,6 @@ def main():
             f.write(f"Case Sensitive: {args.case_sensitive}\n")
             f.write(f"Ignore Punctuation: {args.ignore_punctuation}\n")
             f.write(f"Ignore Spaces: {args.ignore_spaces}\n")
-            f.write(f"CUDA Device: {args.cuda_device}\n\n")
             
             f.write("Results by Dataset:\n")
             f.write("-" * 30 + "\n")

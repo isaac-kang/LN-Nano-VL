@@ -28,7 +28,7 @@ class NemotronSTREvaluator:
                  batch_size: int = 1):
         self.model_name = model_name
         self.device = device
-        self.prompt = prompt or "What is the main text in the image? Output only the text."
+        self.prompt = prompt
         self.case_sensitive = case_sensitive
         self.ignore_punctuation = ignore_punctuation
         self.ignore_spaces = ignore_spaces
@@ -67,6 +67,17 @@ class NemotronSTREvaluator:
             print("Model loaded successfully!")
             print(f"Model device: {next(self.model.parameters()).device}")
             print(f"Model dtype: {next(self.model.parameters()).dtype}")
+            
+            # Print GPU information
+            if torch.cuda.is_available():
+                gpu_id = next(self.model.parameters()).device.index
+                if gpu_id is not None:
+                    gpu_name = torch.cuda.get_device_name(gpu_id)
+                    print(f"GPU Device: {gpu_name} (ID: {gpu_id})")
+                else:
+                    print("GPU Device: CUDA available but device index not found")
+            else:
+                print("GPU Device: CUDA not available")
             
         except Exception as e:
             print(f"Error loading model: {e}")
@@ -336,7 +347,7 @@ def main():
                        help='Maximum number of samples to evaluate (None for all)')
     parser.add_argument('--device', type=str, default="cuda",
                        help='Device to use for inference')
-    parser.add_argument('--prompt', type=str, default="What is the main text in the image? Output only the text.",
+    parser.add_argument('--prompt', type=str, default="What is the main word in the image? Output only the text.",
                        help='Custom prompt for text recognition')
     parser.add_argument('--case-sensitive', type=lambda x: x.lower() == 'true', default=False,
                        help='Enable case-sensitive evaluation (default: False)')

@@ -17,7 +17,7 @@ python ocr_evaluation.py \
     --model_name "nvidia/Llama-3.1-Nemotron-Nano-VL-8B-V1" \
     --max_samples 10 \
     --device cuda \
-    --prompt "What is the main text in the image? Output only the text." \
+    --prompt "What is the main word in the image? Output only the text." \
     --case-sensitive false \
     --ignore-punctuation true \
     --ignore-spaces true \

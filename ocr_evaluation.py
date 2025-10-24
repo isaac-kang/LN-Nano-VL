@@ -66,6 +66,17 @@ class NemotronOCREvaluator:
         print(f"Ignore spaces: {self.ignore_spaces}")
         print("Model loaded successfully!")
         
+        # Print GPU information
+        if torch.cuda.is_available():
+            gpu_id = next(self.model.parameters()).device.index
+            if gpu_id is not None:
+                gpu_name = torch.cuda.get_device_name(gpu_id)
+                print(f"GPU Device: {gpu_name} (ID: {gpu_id})")
+            else:
+                print("GPU Device: CUDA available but device index not found")
+        else:
+            print("GPU Device: CUDA not available")
+        
     def load_dataset(self, dataset_path: str) -> List[Dict]:
         """
         Load dataset from labels.json
